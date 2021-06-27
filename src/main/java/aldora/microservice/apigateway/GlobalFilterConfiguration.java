@@ -5,12 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import reactor.core.publisher.Mono;
 
 @Configuration
 public class GlobalFilterConfiguration {
     final Logger logger = LoggerFactory.getLogger(GlobalFilterConfiguration.class);
 
+    @Order(3)
     @Bean
     public GlobalFilter secondFilter() {
         return (exchange, chain) -> {
@@ -22,6 +24,7 @@ public class GlobalFilterConfiguration {
         };
     }
 
+    @Order(2)
     @Bean
     public GlobalFilter thirdFilter() {
         return (exchange, chain) -> {
@@ -33,6 +36,7 @@ public class GlobalFilterConfiguration {
         };
     }
 
+    @Order(1)
     @Bean
     public GlobalFilter fourthFilter() {
         return (exchange, chain) -> {
